@@ -11,6 +11,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { AddCompanyComponent } from './components/add-company/add-company.component';
 import { CompaniesListComponent } from './components/companies-list/companies-list.component';
 import { CompanyDetailsComponent } from './components/company-details/company-details.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CompanyDetailsComponent } from './components/company-details/company-de
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    AppMaterialModule
+    AppMaterialModule,
+    HttpClientModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
