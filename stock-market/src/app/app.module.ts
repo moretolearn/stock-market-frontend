@@ -12,6 +12,8 @@ import { AddCompanyComponent } from './components/add-company/add-company.compon
 import { CompaniesListComponent } from './components/companies-list/companies-list.component';
 import { CompanyDetailsComponent } from './components/company-details/company-details.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './components/login/login.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     AddCompanyComponent,
     CompaniesListComponent,
     CompanyDetailsComponent,
+    LoginComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
