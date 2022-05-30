@@ -11,7 +11,7 @@ export class CompaniesListComponent implements OnInit {
 
   companyDataSource = new MatTableDataSource<any>();
 
-  displayedColumns: string[] = ['companyCode', 'companyName', 'ceo', 'turnover'];
+  displayedColumns: string[] = ['companyCode', 'companyName', 'ceo', 'turnover','website','exchange','description','actions'];
 
   constructor(private smService:StockmarketService) { }
 
@@ -26,6 +26,12 @@ this.getCompaniesList()
     })
   }
 
+  public onCompanyUpdate(row:any){
 
+  }
+
+  public onCompanyDelete(row:any){
+
+  }
 
 }
