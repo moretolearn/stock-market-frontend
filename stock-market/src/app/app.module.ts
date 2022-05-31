@@ -14,6 +14,7 @@ import { CompanyDetailsComponent } from './components/company-details/company-de
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HeaderComponent } from './components/header/header.component';
     CompanyDetailsComponent,
     LoginComponent,
     HeaderComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
