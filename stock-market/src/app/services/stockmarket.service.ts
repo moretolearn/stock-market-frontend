@@ -5,7 +5,7 @@ import { Company } from '../models/company.model';
 import { Stock } from '../models/stock.model';
 import { ApiResponse } from '../models/api-response.model';
 const companyBaseUrl = 'http://localhost:8083/api/v1/company';
-const stockBaseUrl = 'http://localhost:8081/api/v1/stock';
+const stockBaseUrl = 'http://localhost:8081/api/v1/company';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,6 +22,6 @@ export class StockmarketService {
     return this.http.post(`${companyBaseUrl}/add`,company);
   }
   delete(id : number): Observable<ApiResponse<any>> {
-    return this.http.delete(`${companyBaseUrl}/delete/${id}`);
+    return this.http.delete(`${stockBaseUrl}/delete/${id}`);
   }
 }
