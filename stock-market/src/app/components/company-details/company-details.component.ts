@@ -10,6 +10,8 @@ export class CompanyDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(history.state)  // browser property
+
   }
 
 }
