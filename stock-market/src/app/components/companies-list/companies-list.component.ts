@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { Company } from 'src/app/models/company.model';
 import { StockmarketService } from 'src/app/services/stockmarket.service';
 
 @Component({
@@ -20,7 +22,10 @@ export class CompaniesListComponent implements OnInit {
 
   displayedColumns: string[] = ['companyCode', 'companyName', 'ceo', 'turnover', 'website', 'exchange', 'description', 'actions'];
 
-  constructor(private smService: StockmarketService) { }
+  constructor(
+    private smService: StockmarketService,
+    private router:Router
+    ) { }
 
   ngOnInit(): void {
     this.getCompaniesList()
@@ -36,7 +41,8 @@ export class CompaniesListComponent implements OnInit {
   }
 
   public onCompanyUpdate(row: any) {
-
+console.log("hhh");
+console.log(row)
   }
 
   public onCompanyDelete(row: any) {
@@ -49,4 +55,19 @@ export class CompaniesListComponent implements OnInit {
     })
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.companyDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.companyDataSource.paginator) {
+      this.companyDataSource.paginator.firstPage();
+    }
+  }
+
+  getCompanyDetails(company:Company){
+
+console.log(company)
+
+this.router.navigate(['/companies-detalis'],{state:company})
+  }
 }

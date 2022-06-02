@@ -12,7 +12,7 @@
 }
 
 .mat-header-cell {
-  background:#b5b9d4;
+  background:#3f51b5;
   color:white;
   word-wrap: initial;
   padding: 0px 10px;
@@ -28,3 +28,30 @@
 }
 
 
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.container{
+  margin: 0 auto;
+  max-width: 1400px;
+}
+
+::ng-deep .mat-paginator {
+  background-color: #3f51b5;
+  color: white;
+}
+
+
+::ng-deep .mat-paginator-page-size-label{
+ font-size: small !important;
+}
