@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+import { AddCompanyComponent } from '../add-company/add-company.component';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(DialogComponent,{
+    this.dialog.open(AddCompanyComponent,{
       width:'30%'
     });
   }
