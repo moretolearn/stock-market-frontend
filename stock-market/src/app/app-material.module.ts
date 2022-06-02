@@ -15,7 +15,9 @@ import {MatRadioModule}  from '@angular/material/radio';
 import {MatSelectModule}  from '@angular/material/select';
 import {MatDatepickerModule}  from '@angular/material/datepicker';
 import {MatCheckboxModule}  from '@angular/material/checkbox';
-import {MatDividerModule}   from '@angular/material/divider'
+import {MatDividerModule}   from '@angular/material/divider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 const AppMaterial = [
   MatButtonModule,
@@ -34,8 +36,8 @@ const AppMaterial = [
   MatSelectModule,
   MatDatepickerModule,
   MatCheckboxModule,
-  MatDividerModule
-
+  MatDividerModule,
+  MatProgressSpinnerModule
 
 ]
 

@@ -8,7 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 const routes: Routes = [
   { path: '', redirectTo: 'companies', pathMatch: 'full' },
   { path: 'companies', component: CompaniesListComponent },
-  { path: 'companies/:id', component: CompanyDetailsComponent },
+  { path: 'companies-detalis', component: CompanyDetailsComponent },
   { path: 'add', component: AddCompanyComponent }
 
 ];
