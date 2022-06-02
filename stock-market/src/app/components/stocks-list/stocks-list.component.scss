@@ -1,0 +1,57 @@
+.mat-card-title{
+  color:#3f51b5 ;
+  padding:5px ;
+}
+
+ .mat-card{
+  padding:5px ;
+}
+
+.mat-card-content{
+  padding:0px ;
+}
+
+.mat-header-cell {
+  background:#3f51b5;
+  color:white;
+  word-wrap: initial;
+  padding: 0px 10px;
+  line-break: unset;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.mat-row {
+  min-width: max-content;
+}
+
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.container{
+  margin: 0 auto;
+  max-width: 1400px;
+}
+
+::ng-deep .mat-paginator {
+  background-color: #3f51b5;
+  color: white;
+}
+
+
+::ng-deep .mat-paginator-page-size-label{
+ font-size: small !important;
+}
