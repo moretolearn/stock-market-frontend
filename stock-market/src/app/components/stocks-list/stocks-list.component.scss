@@ -5,15 +5,16 @@
 
  .mat-card{
   padding:5px ;
+
 }
 
 .mat-card-content{
-  padding:0px ;
+  padding:5px ;
 }
 
 .mat-header-cell {
-  background:#3f51b5;
-  color:white;
+  // background:#3f51b5;
+  // color:white;
   word-wrap: initial;
   padding: 0px 10px;
   line-break: unset;
@@ -47,11 +48,38 @@ table {
 }
 
 ::ng-deep .mat-paginator {
-  background-color: #3f51b5;
+  // background-color: #3f51b5;
   color: white;
 }
 
 
 ::ng-deep .mat-paginator-page-size-label{
  font-size: small !important;
+}
+
+
+table
+{
+  table-layout:fixed;
+}
+td,th
+{
+  width:20px;
+  word-wrap:break-word;
+}
+
+ .mat-raised-button {
+  // text-indent: 5px;
+  margin-top: 5px !important;
+  height: 35px;
+
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: .5em;
+}
+
+.spacing {
+
+  flex: 1 1 auto;
 }

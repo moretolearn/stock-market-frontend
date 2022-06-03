@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,10 +8,25 @@ import { Router } from '@angular/router';
 import { Stock } from 'src/app/models/stock.model';
 import { StockmarketService } from 'src/app/services/stockmarket.service';
 
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
+
 @Component({
   selector: 'app-stocks-list',
   templateUrl: './stocks-list.component.html',
-  styleUrls: ['./stocks-list.component.scss']
+  styleUrls: ['./stocks-list.component.scss'],
+  providers:[
+    {provide:MAT_DATE_FORMATS,useValue:MY_DATE_FORMATS}
+  ]
 })
 export class StocksListComponent implements OnInit {
 
@@ -22,6 +39,10 @@ export class StocksListComponent implements OnInit {
 
 
   displayedColumns: string[] = ['stockCode', 'stockName', 'price', 'startDate', 'endDate', 'description', 'actions'];
+
+
+  startDate = new FormControl(new Date());
+  endDate = new FormControl(new Date());
 
   constructor(
     private smService: StockmarketService,
