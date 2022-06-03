@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { StockmarketService } from 'src/app/services/stockmarket.service';
 
 @Component({
@@ -10,9 +10,11 @@ import { StockmarketService } from 'src/app/services/stockmarket.service';
 })
 export class AddCompanyComponent implements OnInit {
 
+  buttonName : string ="Save";
   companyForm !: FormGroup;
   constructor(
     private formBuilder : FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public editCompanyData:any,
     private smService : StockmarketService,
     private dialogRef : MatDialogRef<AddCompanyComponent>) { }
 
@@ -29,28 +31,52 @@ export class AddCompanyComponent implements OnInit {
 
     })
 
+    if(this.editCompanyData){
+      this.buttonName="Update";
+      this.companyForm.controls['companyName'].setValue(this.editCompanyData.companyName);
+      this.companyForm.controls['description'].setValue(this.editCompanyData.description);
+      this.companyForm.controls['ceo'].setValue(this.editCompanyData.ceo);
+      this.companyForm.controls['turnover'].setValue(this.editCompanyData.turnover);
+      this.companyForm.controls['website'].setValue(this.editCompanyData.website);
+      this.companyForm.controls['exchange'].setValue(this.editCompanyData.exchange);
+
+    }
   }
 
   addCompany(){
-    if(this.companyForm.valid){
-      this.smService.add(this.companyForm.value)
-      .subscribe({
-        next:(res)=>{
-          alert("Company Registered");
+    if(!this.editCompanyData){
+      if(this.companyForm.valid){
+        this.smService.add(this.companyForm.value)
+        .subscribe({
+          next:(res)=>{
+            alert("Company Registered");
+            this.companyForm.reset();
+            this.dialogRef.close('save');
+          },
+          error:()=>{
+            alert("Error occured while adding the Company")
+          }
 
-          this.companyForm.reset();
-          this.dialogRef.close();
-
-        },
-        error:()=>{
-          alert("Error occured while adding the Company")
-        }
-
-      })
+        })
+      }
+    }
+      else{
+        this.updateCompany();
+      }
     }
 
+  updateCompany(){
+    this.smService.update(this.companyForm.value, this.editCompanyData.companyCode)
+    .subscribe({
+      next:(res)=>{
+        alert("Company updated");
+        this.companyForm.reset();
+        this.dialogRef.close('update');
+      },
+      error:()=>{
+        alert("Error occured while updating the Company")
+      }
+
+    })
   }
-
-
-
 }

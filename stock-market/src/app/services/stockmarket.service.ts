@@ -32,4 +32,8 @@ export class StockmarketService {
   getStockAll(): Observable<ApiResponse<Stock[]>> {
     return this.http.get(`${stockQuery}/getall`);
   }
+
+  update(company : any, id: number): Observable<any>{
+    return this.http.put<any>(`${companyCommand}/`+id,company);
+  }
 }
