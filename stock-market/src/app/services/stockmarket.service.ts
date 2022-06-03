@@ -26,14 +26,14 @@ export class StockmarketService {
     return this.http.post(`${companyQuery}/add`, company);
   }
   delete(id: number): Observable<ApiResponse<any>> {
-    return this.http.delete(`${stockCommand}/delete/${id}`);
+    return this.http.delete(`${companyCommand}/delete/${id}`);
   }
 
   getStockAll(): Observable<ApiResponse<Stock[]>> {
     return this.http.get(`${stockQuery}/getall`);
   }
 
-  update(company : any, id: number): Observable<any>{
-    return this.http.put<any>(`${companyCommand}/`+id,company);
+  updateCompany(company : any, id: number): Observable<any>{
+    return this.http.put<any>(`${companyQuery}/`+id,company);
   }
 }
