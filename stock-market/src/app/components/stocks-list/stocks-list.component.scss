@@ -13,8 +13,8 @@
 }
 
 .mat-header-cell {
-  // background:#3f51b5;
-  // color:white;
+  background:#3f51b5;
+  color:white;
   word-wrap: initial;
   padding: 0px 10px;
   line-break: unset;
@@ -48,7 +48,7 @@ table {
 }
 
 ::ng-deep .mat-paginator {
-  // background-color: #3f51b5;
+  background-color: #3f51b5;
   color: white;
 }
 
@@ -80,6 +80,5 @@ td,th
 }
 
 .spacing {
-
   flex: 1 1 auto;
 }
