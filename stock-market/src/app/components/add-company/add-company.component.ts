@@ -66,7 +66,7 @@ export class AddCompanyComponent implements OnInit {
     }
 
   updateCompany(){
-    this.smService.update(this.companyForm.value, this.editCompanyData.companyCode)
+    this.smService.updateCompany(this.companyForm.value, this.editCompanyData.companyCode)
     .subscribe({
       next:(res)=>{
         alert("Company updated");
