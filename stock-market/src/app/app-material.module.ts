@@ -18,7 +18,6 @@ import {MatCheckboxModule}  from '@angular/material/checkbox';
 import {MatDividerModule}   from '@angular/material/divider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MomentDateModule } from '@angular/material-moment-adapter';
 
 
 const AppMaterial = [
@@ -41,7 +40,6 @@ const AppMaterial = [
   MatDividerModule,
   MatProgressSpinnerModule,
   MatNativeDateModule,
-  MomentDateModule
 
 ]
 
