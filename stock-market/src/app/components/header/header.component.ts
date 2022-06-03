@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AddCompanyComponent } from '../add-company/add-company.component';
 
 @Component({
   selector: 'app-header',
@@ -9,15 +7,9 @@ import { AddCompanyComponent } from '../add-company/add-company.component';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  openDialog() {
-    this.dialog.open(AddCompanyComponent,{
-      width:'30%'
-    });
   }
 
 }
