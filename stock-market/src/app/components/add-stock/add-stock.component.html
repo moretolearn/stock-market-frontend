@@ -1,0 +1,40 @@
+<h4 mat-dialog-title>Enter Stock Information</h4>
+<form [formGroup]="stockForm">
+    <div mat-dialog-content>
+        <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Stock Name</mat-label>
+              <input formControlName="stockName" matInput/>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Stock Description</mat-label>
+              <textarea formControlName="description" matInput> </textarea>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Price In $</mat-label>
+              <input formControlName="price" matInput type="number">
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Start Date</mat-label>
+              <input formControlName="startDate" matInput>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>End Date</mat-label>
+              <input formControlName="endDate" matInput>
+            </mat-form-field>
+          </p>
+    </div>
+</form>
+<div mat-dialog-action [align]="'end'">
+    <button class ="buttonclass" mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button class ="buttonclass" mat-raised-button color="primary" (click)="addStock()">{{buttonName}}</button>
+
+</div>
