@@ -1,86 +1,151 @@
-
 <div class="container">
-  <div style="margin-top: 10px;">
+  <div style="margin-top: 10px">
     <div class="row">
       <div class="col-sm-10">
         <mat-form-field appearance="outline">
-          <mat-label >Filter</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Cognizant" #input>
+          <mat-label>Filter</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Ex. Cognizant"
+            #input
+          />
         </mat-form-field>
       </div>
       <div class="col-sm-2">
-        <button mat-raised-button color="primary" (click)="addDialog()" style="margin-left: 90px;margin-top: 4px;height: 38px;">Add Company</button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addDialog()"
+          style="margin-left: 90px; margin-top: 4px; height: 38px"
+        >
+          Add Company
+        </button>
       </div>
     </div>
 
-
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="companyDataSource" matSort class="mat-elevation-z8" matSortDirection="desc">
+      <table
+        mat-table
+        [dataSource]="companyDataSource"
+        matSort
+        class="mat-elevation-z8"
+        matSortDirection="desc"
+      >
         <!-- CompanyCode Column -->
         <ng-container matColumnDef="companyCode">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> CompanyCode. </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.companyCode}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            CompanyCode.
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.companyCode }}
+          </mat-cell>
         </ng-container>
 
         <!-- CompanyName Column -->
         <ng-container matColumnDef="companyName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> CompanyName </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.companyName}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            CompanyName
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.companyName }}
+          </mat-cell>
         </ng-container>
 
         <!-- Ceo Column -->
         <ng-container matColumnDef="ceo">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Ceo </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.ceo}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Ceo
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.ceo }} </mat-cell>
         </ng-container>
 
         <!-- Turnover Column -->
         <ng-container matColumnDef="turnover">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Turnover </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.turnover}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Turnover
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.turnover }}
+          </mat-cell>
         </ng-container>
 
         <!-- Website Column -->
         <ng-container matColumnDef="website">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Website </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.website}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Website
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.website }} </mat-cell>
         </ng-container>
 
         <!-- Exchange Column -->
         <ng-container matColumnDef="exchange">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Exchange </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.exchange}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Exchange
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.exchange }}
+          </mat-cell>
         </ng-container>
 
         <!-- Description Column -->
         <ng-container matColumnDef="description">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Description
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.description }}
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            <button mat-icon-button color="primary" matTooltip="Update" (click)="updateCompany(row);$event.stopPropagation();">
+            <button
+              mat-icon-button
+              color="accent"
+              matTooltip="View"
+              (click)="getCompanyDetails(row); $event.stopPropagation()"
+            >
+              <mat-icon>view_column</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="primary"
+              matTooltip="Update"
+              (click)="updateCompany(row); $event.stopPropagation()"
+            >
               <mat-icon>create</mat-icon>
             </button>
-            <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteCompany(row);$event.stopPropagation();">
+            <button
+              mat-icon-button
+              color="warn"
+              matTooltip="Delete"
+              (click)="deleteCompany(row); $event.stopPropagation()"
+            >
               <mat-icon>delete_outline</mat-icon>
             </button>
           </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getCompanyDetails(row)"></mat-row>
+        <mat-row
+          *matRowDef="let row; columns: displayedColumns"
+        ></mat-row>
 
         <!-- <mat-row *matNoDataRow>No data matching the filter "{{input.value}}"</mat-row> -->
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-          </tr>
-
+          <td class="mat-cell" colspan="4">
+            No data matching the filter "{{ input.value }}"
+          </td>
+        </tr>
       </table>
 
-      <mat-paginator [hidden]="!companyDataSource.data.length" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+      <mat-paginator
+        [hidden]="!companyDataSource.data.length"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+      ></mat-paginator>
     </div>
   </div>
 </div>

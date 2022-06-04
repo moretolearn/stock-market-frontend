@@ -36,7 +36,7 @@ export class CompaniesListComponent implements OnInit {
 
   public getCompaniesList() {
     this.smService.getAll().subscribe(res => {
-      // console.log(res)
+      console.log(res.result)
       this.companyDataSource.data = res.result;
       this.companyDataSource.sort = this.matSort;
       this.companyDataSource.paginator = this.matPaginator;
@@ -65,8 +65,8 @@ export class CompaniesListComponent implements OnInit {
   getCompanyDetails(company: Company) {
 
     console.log(company)
-
-    this.router.navigate(['/companies-detalis'], { state: company })
+    localStorage.setItem('companyCode',JSON.stringify(company.companyCode));
+    this.router.navigate(['/companies-detalis'])
   }
 
 
@@ -80,14 +80,14 @@ export class CompaniesListComponent implements OnInit {
     });
   }
 
-  updateCompany(row : any){
-    this.dialog.open(AddCompanyComponent,{
-      width:'30%',
-      data : row
-    }).afterClosed().subscribe(val =>{
-      if(val==='update'){
+  updateCompany(row: any) {
+    this.dialog.open(AddCompanyComponent, {
+      width: '30%',
+      data: row
+    }).afterClosed().subscribe(val => {
+      if (val === 'update') {
         this.getCompaniesList();
       }
-  })
+    })
   }
 }
