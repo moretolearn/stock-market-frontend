@@ -1,28 +1,54 @@
 <mat-card>
-  <mat-card style="height: 50px ;">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-3">
-        <span> </span>
-      </div>
-      <div class="col-sm-3"> <mat-form-field appearance="outline">
-        <input matInput [matDatepicker]="picker1" placeholder="Start Date" [formControl]="startDate">
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field></div>
-      <div class="col-sm-3"> <mat-form-field appearance="outline">
-        <input matInput [matDatepicker]="picker2" placeholder="End Date"
-         [min]="startDate.value" [formControl]="endDate">
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-      </mat-form-field></div>
-      <div class="col-sm-3">
-        <button mat-raised-button color="primary"><span class="spacing">Search</span></button>
+  <mat-card style="height: 50px">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5">
+          <mat-form-field appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker1"
+              [formControl]="startDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker1"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5">
+          <mat-form-field appearance="outline">
+            <mat-label>End Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker2"
+              [min]="startDate.value"
+              [formControl]="endDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker2"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-1">
+          <button mat-raised-button color="primary" style="width: 100px;">
+            <span class="spacing">Search</span>
+          </button>
+        </div>
+        <div class="col-sm-1">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="addDialog()"
+            style=" margin-top: 4px; height: 35px">Add Stock
+          </button>
+        </div>
       </div>
     </div>
-
-  </div>
-</mat-card>
+  </mat-card>
   <div>
     <mat-card>
       <div class="container">
@@ -107,7 +133,7 @@
                     mat-icon-button
                     color="primary"
                     matTooltip="Update"
-                    (click)="onStockUpdate(row); $event.stopPropagation()"
+                    (click)="updateStock(row); $event.stopPropagation()"
                   >
                     <mat-icon>create</mat-icon>
                   </button>
@@ -127,7 +153,6 @@
               ></mat-header-row>
               <mat-row
                 *matRowDef="let row; columns: displayedColumns"
-                (click)="getStockDetails(row)"
               ></mat-row>
 
               <!-- <mat-row *matNoDataRow>No data matching the filter "{{input.value}}"</mat-row> -->
@@ -138,8 +163,8 @@
 
             <mat-paginator
               [hidden]="!stockDataSource.data.length"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              aria-label="Select page of users"
+              [pageSize]="5"
+              [pageSizeOptions]="[5, 10]"
             ></mat-paginator>
           </div>
         </div>

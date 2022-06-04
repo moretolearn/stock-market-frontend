@@ -1,41 +1,29 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Stock } from 'src/app/models/stock.model';
 import { StockmarketService } from 'src/app/services/stockmarket.service';
+import { AddStockComponent } from '../add-stock/add-stock.component';
 
-export const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
-  },
-};
+
 
 @Component({
   selector: 'app-stocks-list',
   templateUrl: './stocks-list.component.html',
-  styleUrls: ['./stocks-list.component.scss'],
-  providers:[
-    {provide:MAT_DATE_FORMATS,useValue:MY_DATE_FORMATS}
-  ]
+  styleUrls: ['./stocks-list.component.scss']
 })
 export class StocksListComponent implements OnInit {
-
 
   stockDataSource = new MatTableDataSource<any>();
 
 
-  @ViewChild(MatSort) matSort:MatSort;
-  @ViewChild(MatPaginator) matPaginator:MatPaginator
+  @ViewChild(MatSort) matSort: MatSort;
+  @ViewChild(MatPaginator) matPaginator: MatPaginator
 
 
   displayedColumns: string[] = ['stockCode', 'stockName', 'price', 'startDate', 'endDate', 'description', 'actions'];
@@ -46,35 +34,38 @@ export class StocksListComponent implements OnInit {
 
   constructor(
     private smService: StockmarketService,
-    private router:Router
-    ) { }
+    private router: Router,
+    private dialog: MatDialog
+  ) { }
+
+  companyCode:number;
 
   ngOnInit(): void {
-    this.getStocksList()
+    this.companyCode = Number(localStorage.getItem('companyCode'));
+    // this.getStocksList()
+    this.getStocksListByCompany()
   }
 
-  public getStocksList() {
-    this.smService.getStockAll().subscribe(res => {
+  @Output() company = new EventEmitter<any>();
+
+  public getStocksListByCompany() {
+    this.smService.getCompanyStocksListByCompany(this.companyCode).subscribe(res => {
       console.log(res)
-      this.stockDataSource.data = res.result;
-      this.stockDataSource.sort= this.matSort;
-      this.stockDataSource.paginator =  this.matPaginator;
+      this.company.emit(res.result);
+      this.stockDataSource.data = res.result.stocks;
+      this.stockDataSource.sort = this.matSort;
+      this.stockDataSource.paginator = this.matPaginator;
     })
-  }
-
-  public onStockUpdate(row: any) {
-console.log("hhh");
-console.log(row)
   }
 
   public onStockDelete(row: any) {
 
-    // this.smService.delete(row.stockCode).subscribe({
-    //   next: (res) => {
-    //     console.log(res)
-    //     this.getStocksList()
-    //   },
-    // })
+    this.smService.deleteStock(row.stockCode).subscribe({
+      next: (res) => {
+        console.log(res)
+        this.getStocksListByCompany();
+      },
+    })
   }
 
   applyFilter(event: Event) {
@@ -86,12 +77,32 @@ console.log(row)
     }
   }
 
-  getStockDetails(stock:Stock){
+  getStockDetails(stock: Stock) {
 
-console.log(stock)
+    console.log(stock)
 
-this.router.navigate(['/stock-detalis'],{state:stock})
+    this.router.navigate(['/stock-detalis'], { state: stock })
   }
 
+  addDialog() {
+    this.dialog.open(AddStockComponent, {
+      width: '30%'
+    }).afterClosed().subscribe(val => {
+      if (val === 'save') {
+        this.getStocksListByCompany();
+      }
+    });
+  }
+
+  updateStock(row: any) {
+    this.dialog.open(AddStockComponent, {
+      width: '30%',
+      data: row
+    }).afterClosed().subscribe(val => {
+      if (val === 'update') {
+        this.getStocksListByCompany()
+      }
+    })
+  }
 
 }
