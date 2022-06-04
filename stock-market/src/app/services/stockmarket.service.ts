@@ -22,18 +22,36 @@ export class StockmarketService {
   get(id: number): Observable<ApiResponse<Company>> {
     return this.http.get(`${companyQuery}/info/${id}`);
   }
+
   add(company: Company): Observable<ApiResponse<any>> {
     return this.http.post(`${companyQuery}/add`, company);
   }
+
   delete(id: number): Observable<ApiResponse<any>> {
     return this.http.delete(`${companyCommand}/delete/${id}`);
   }
 
-  getStockAll(): Observable<ApiResponse<Stock[]>> {
-    return this.http.get(`${stockQuery}/getall`);
+  getCompanyStocksListByCompany(companyCode:number): Observable<ApiResponse<Stock[]>> {
+    return this.http.get(`${companyQuery}/info/${companyCode}`);
+  }
+
+  getStocksListByCompany(companyCode:number): Observable<ApiResponse<Stock[]>> {
+    return this.http.get(`${stockQuery}/getall/${companyCode}`);
   }
 
   updateCompany(company : any, id: number): Observable<any>{
     return this.http.put<any>(`${companyQuery}/`+id,company);
+  }
+
+  deleteStock(id: number): Observable<ApiResponse<any>> {
+    return this.http.delete(`${stockCommand}/${id}`);
+  }
+
+  addStock(companyCode:number,stock: Stock): Observable<ApiResponse<any>> {
+    return this.http.post(`${stockCommand}/add/${companyCode}`, stock);
+  }
+
+  updateStock(stock : any, cid:number, id: number): Observable<any>{
+    return this.http.put<any>(`${stockCommand}/`+cid+'/'+id,stock);
   }
 }
