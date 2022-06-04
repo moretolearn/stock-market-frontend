@@ -5,14 +5,18 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th colspan="1" width="48%">CompanyCode</th>
+            <th colspan="1">CompanyCode</th>
             <th colspan="1">CompanyName</th>
+            <th colspan="1">CEO Name</th>
+            <th colspan="1">Exchange</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td colspan="1">CC1</td>
-            <td colspan="1">CTS</td>
+            <td colspan="1">{{company?.companyCode}}</td>
+            <td colspan="1">{{company?.companyName}}</td>
+            <td colspan="1">{{company?.ceo}}</td>
+            <td colspan="1">{{company?.exchange}}</td>
           </tr>
         </tbody>
       </table>
@@ -23,8 +27,12 @@
           <tbody>
 
             <tr>
-              <th colspan="1">CEO Name</th>
-              <td colspan="1">RAM</td>
+              <th colspan="1">Turnover</th>
+              <td colspan="1">{{company?.turnover}}</td>
+            </tr>
+            <tr>
+              <th colspan="1">Description</th>
+              <td colspan="1">{{company?.description}}</td>
             </tr>
           </tbody>
         </table>
@@ -32,5 +40,5 @@
   </mat-card>
 </div>
 <!-- <mat-divider></mat-divider> -->
-<app-stocks-list></app-stocks-list>
+<app-stocks-list (company)="getCompany($event)"></app-stocks-list>
 </mat-card>

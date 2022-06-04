@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Company } from 'src/app/models/company.model';
 
 @Component({
   selector: 'app-company-details',
@@ -7,11 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyDetailsComponent implements OnInit {
 
+  company: Company;
+
   constructor() { }
 
   ngOnInit(): void {
-    console.log(history.state)  // browser property
 
+  }
+
+  getCompany(value: any) {
+    console.log(value)
+    this.company = value
   }
 
 }
