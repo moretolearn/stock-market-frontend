@@ -136,11 +136,11 @@
                 <mat-cell *matCellDef="let row">
                   <button
                     mat-icon-button
-                    color="primary"
+                    color="accent"
                     matTooltip="Update"
                     (click)="updateStock(row); $event.stopPropagation()"
                   >
-                    <mat-icon>create</mat-icon>
+                    <mat-icon>update</mat-icon>
                   </button>
                   <button
                     mat-icon-button
@@ -148,7 +148,7 @@
                     matTooltip="Delete"
                     (click)="onStockDelete(row); $event.stopPropagation()"
                   >
-                    <mat-icon>delete_outline</mat-icon>
+                    <mat-icon>delete</mat-icon>
                   </button>
                 </mat-cell>
               </ng-container>
