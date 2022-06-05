@@ -35,6 +35,6 @@
 </form>
 <div mat-dialog-action [align]="'end'">
     <button class ="buttonclass" mat-raised-button color="warn" mat-dialog-close>Close</button>
-    <button class ="buttonclass" mat-raised-button color="primary" (click)="addStock()">{{buttonName}}</button>
+    <button class ="buttonclass" mat-raised-button color="primary" (click)="addStock()" [disabled]="!stockForm.valid">{{buttonName}}</button>
 
 </div>

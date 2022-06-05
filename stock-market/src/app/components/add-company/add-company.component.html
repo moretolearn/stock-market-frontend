@@ -44,6 +44,6 @@
 </form>
 <div mat-dialog-action [align]="'end'">
     <button class ="buttonclass" mat-raised-button color="warn" mat-dialog-close>Close</button>
-    <button class ="buttonclass" mat-raised-button color="primary" (click)="addCompany()">{{buttonName}}</button>
+    <button class ="buttonclass" mat-raised-button color="primary" (click)="addCompany()" [disabled]="!companyForm.valid">{{buttonName}}</button>
 
 </div>
