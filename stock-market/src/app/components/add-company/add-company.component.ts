@@ -26,7 +26,7 @@ export class AddCompanyComponent implements OnInit {
       companyName: ['', Validators.required],
       description: ['', Validators.required],
       ceo: ['', Validators.required],
-      turnover: ['', [Validators.required, Validators.pattern("^[0-9]*$")], Validators.min(100000000)],
+      turnover: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       website: ['', Validators.required],
       exchange: ['', Validators.required]
 
