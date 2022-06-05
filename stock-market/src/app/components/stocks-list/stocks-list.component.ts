@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { Component, EventEmitter, Inject, LOCALE_ID, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { Stock } from 'src/app/models/stock.model';
 import { StockmarketService } from 'src/app/services/stockmarket.service';
 import { AddStockComponent } from '../add-stock/add-stock.component';
@@ -35,10 +37,11 @@ export class StocksListComponent implements OnInit {
   constructor(
     private smService: StockmarketService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    @Inject(LOCALE_ID) private locale: string
   ) { }
 
-  companyCode:number;
+  companyCode: number;
 
   ngOnInit(): void {
     this.companyCode = Number(localStorage.getItem('companyCode'));
@@ -46,13 +49,19 @@ export class StocksListComponent implements OnInit {
     this.getStocksListByCompany()
   }
 
+  stockMinMaxAvgDto: any;
+
   @Output() company = new EventEmitter<any>();
+
+  dataStore: any;
 
   public getStocksListByCompany() {
     this.smService.getCompanyStocksListByCompany(this.companyCode).subscribe(res => {
       console.log(res)
-      this.company.emit(res.result);
-      this.stockDataSource.data = res.result.stocks;
+      this.dataStore = res;
+      this.company.emit(res.result.object);
+      this.stockDataSource.data = res.result.object.stocks;
+      this.stockMinMaxAvgDto = res.result.stockMinMaxAvgDto;
       this.stockDataSource.sort = this.matSort;
       this.stockDataSource.paginator = this.matPaginator;
     })
@@ -105,4 +114,34 @@ export class StocksListComponent implements OnInit {
     })
   }
 
+  searchStocksList() {
+    console.log(this.startDate.value)
+    console.log(this.endDate.value)
+    // const startDate = moment(this.startDate.value, 'DD/MM/YYYY');
+    // const startDateString = startDate.isValid() ? startDate.toDate() : null;
+
+    // const endDate = moment(this.startDate.value, 'DD/MM/YYYY');
+    // const endDateString = endDate.isValid() ? endDate.toDate() : null;
+    let startDate = moment(this.startDate.value).format("DD-MM-yyyy");
+    let endDate = moment(this.endDate.value).format("DD-MM-yyyy")
+    console.log(startDate)
+    console.log(endDate)
+
+    // var dateString = formatDate('','yyyy-MM-dd',this.locale);
+    this.smService.getStocksByDates(this.companyCode, startDate, endDate).subscribe(res => {
+      console.log(res)
+      this.stockDataSource.data = res.result.object;
+      this.stockMinMaxAvgDto = res.result.stockMinMaxAvgDto;
+      this.stockDataSource.sort = this.matSort;
+      this.stockDataSource.paginator = this.matPaginator;
+    })
+  }
+
+  resetSearchStocksList() {
+    this.company.emit(this.dataStore.result.object);
+    this.stockDataSource.data = this.dataStore.result.object.stocks;
+    this.stockMinMaxAvgDto = this.dataStore.result.stockMinMaxAvgDto;
+    this.stockDataSource.sort = this.matSort;
+    this.stockDataSource.paginator = this.matPaginator;
+  }
 }

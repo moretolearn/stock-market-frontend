@@ -82,3 +82,22 @@ td,th
 .spacing {
   flex: 1 1 auto;
 }
+
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+
+table
+{
+  table-layout:fixed;
+}
+td,th
+{
+  width:20px;
+  word-wrap:break-word;
+}

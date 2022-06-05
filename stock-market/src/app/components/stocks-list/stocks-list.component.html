@@ -2,7 +2,7 @@
   <mat-card style="height: 50px">
     <div class="container">
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-4">
           <mat-form-field appearance="outline">
             <mat-label>Start Date</mat-label>
             <input
@@ -17,7 +17,7 @@
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-4">
           <mat-form-field appearance="outline">
             <mat-label>End Date</mat-label>
             <input
@@ -34,16 +34,21 @@
           </mat-form-field>
         </div>
         <div class="col-sm-1">
-          <button mat-raised-button color="primary" style="width: 100px;">
+          <button mat-raised-button color="primary" style="width: 130px;" (click)="searchStocksList()">
             <span class="spacing">Search</span>
           </button>
         </div>
         <div class="col-sm-1">
+          <button mat-raised-button color="primary" style="width: 130px; margin-left: 35px;" (click)="resetSearchStocksList()">
+            <span class="spacing">Reset Search</span>
+          </button>
+        </div>
+        <div class="col-sm-2">
           <button
             mat-raised-button
             color="primary"
             (click)="addDialog()"
-            style=" margin-top: 4px; height: 35px">Add Stock
+            style=" margin-top: 4px;margin-left: 70px; height: 35px; width: 130px;">Add Stock
           </button>
         </div>
       </div>
@@ -171,4 +176,26 @@
       </div>
     </mat-card>
   </div>
+    <div>
+      <mat-card>
+        <div class="container table-responsive">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th colspan="1">Min</th>
+                <td colspan="1">{{ stockMinMaxAvgDto?.min }}</td>
+              </tr>
+              <tr>
+                <th colspan="1">Max</th>
+                <td colspan="1">{{ stockMinMaxAvgDto?.max }}</td>
+              </tr>
+              <tr>
+                <th colspan="1">Avg</th>
+                <td colspan="1">{{ stockMinMaxAvgDto?.avg }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card>
+    </div>
 </mat-card>

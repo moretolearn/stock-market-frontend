@@ -31,7 +31,7 @@ export class StockmarketService {
     return this.http.delete(`${companyCommand}/delete/${id}`);
   }
 
-  getCompanyStocksListByCompany(companyCode:number): Observable<ApiResponse<Stock[]>> {
+  getCompanyStocksListByCompany(companyCode:number): Observable<ApiResponse<any>> {
     return this.http.get(`${companyQuery}/info/${companyCode}`);
   }
 
@@ -53,5 +53,9 @@ export class StockmarketService {
 
   updateStock(stock : any, cid:number, id: number): Observable<any>{
     return this.http.put<any>(`${stockCommand}/`+cid+'/'+id,stock);
+  }
+
+  getStocksByDates(companyCode:number,startDate:string,endDate:string): Observable<any>{
+    return this.http.get(`${stockQuery}/get/${companyCode}/${startDate}/${endDate}`);
   }
 }
