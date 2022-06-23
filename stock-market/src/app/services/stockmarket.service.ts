@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { Company } from '../models/company.model';
 import { Stock } from '../models/stock.model';
 import { ApiResponse } from '../models/api-response.model';
-const query = 'http://localhost:8082/api/v1/';
+const query = 'http://localhost:8083/api/v1/query/';
 const companyQuery = query + 'company';
 const stockQuery = query + 'stock';
-const command = 'http://localhost:8081/api/v1/';
+const command = 'http://localhost:8083/api/v1/command/';
 const companyCommand = command + 'company';
 const stockCommand = command + 'stock'
 @Injectable({

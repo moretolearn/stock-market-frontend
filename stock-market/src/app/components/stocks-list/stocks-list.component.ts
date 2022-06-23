@@ -64,6 +64,8 @@ export class StocksListComponent implements OnInit {
       this.stockMinMaxAvgDto = res.result.stockMinMaxAvgDto;
       this.stockDataSource.sort = this.matSort;
       this.stockDataSource.paginator = this.matPaginator;
+      this.getCalMinMaxAvg(res.result.object.stocks)
+
     })
   }
 
@@ -134,6 +136,7 @@ export class StocksListComponent implements OnInit {
       this.stockMinMaxAvgDto = res.result.stockMinMaxAvgDto;
       this.stockDataSource.sort = this.matSort;
       this.stockDataSource.paginator = this.matPaginator;
+      this.getCalMinMaxAvg(res.result.object)
     })
   }
 
@@ -143,5 +146,36 @@ export class StocksListComponent implements OnInit {
     this.stockMinMaxAvgDto = this.dataStore.result.stockMinMaxAvgDto;
     this.stockDataSource.sort = this.matSort;
     this.stockDataSource.paginator = this.matPaginator;
+    this.getCalMinMaxAvg(this.dataStore.result.object.stocks)
+  }
+
+  avg !: number;
+  min !: number;
+  max !: number;
+
+  getCalMinMaxAvg(stocklistData:any){
+    console.log( stocklistData);
+      var sum = 0;
+      this.max = 0;
+      this.min =0;
+      this.avg =0;
+      for (var i = 0; i < stocklistData?.length; i++) {
+        this.min = stocklistData[0].price;
+
+        sum += stocklistData[i].price;
+
+        if(this.max<stocklistData[i].price)
+        this.max=stocklistData[i].price;
+
+          if(this.min>stocklistData[i].price)
+          this.min=stocklistData[i].price;
+
+      }
+      if(stocklistData?.length >0)
+      this.avg = sum / stocklistData.length;
+
+      console.log("average " + this.avg);
+      console.log("max "+this.max);
+      console.log("min "+ this.min);
   }
 }
