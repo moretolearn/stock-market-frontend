@@ -18,9 +18,10 @@ export class AddStockComponent implements OnInit {
     private smService : StockmarketService,
     private dialogRef : MatDialogRef<AddStockComponent>) { }
 
-
+  companyCode:any;
 
   ngOnInit(): void {
+    this.companyCode = Number(localStorage.getItem('companyCode'));
     this.stockForm=this.formBuilder.group({
       stockName : ['',Validators.required],
       description : ['',Validators.required],
@@ -44,7 +45,7 @@ export class AddStockComponent implements OnInit {
   addStock(){
     if(!this.updateStockData){
       if(this.stockForm.valid){
-        this.smService.addStock(55,this.stockForm.value)
+        this.smService.addStock(this.companyCode,this.stockForm.value)
         .subscribe({
           next:(res)=>{
             alert("Stock Registered");
@@ -64,7 +65,7 @@ export class AddStockComponent implements OnInit {
     }
 
   updateStock(){
-    this.smService.updateStock(this.stockForm.value,55, this.updateStockData.stockCode)
+    this.smService.updateStock(this.stockForm.value,this.companyCode, this.updateStockData.stockCode)
     .subscribe({
       next:(res)=>{
         alert("Stock updated");
