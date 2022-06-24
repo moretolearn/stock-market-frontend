@@ -149,33 +149,29 @@ export class StocksListComponent implements OnInit {
     this.getCalMinMaxAvg(this.dataStore.result.object.stocks)
   }
 
-  avg !: number;
+  avg !: any;
   min !: number;
   max !: number;
 
-  getCalMinMaxAvg(stocklistData:any){
-    console.log( stocklistData);
-      var sum = 0;
-      this.max = 0;
-      this.min =0;
-      this.avg =0;
-      for (var i = 0; i < stocklistData?.length; i++) {
-        this.min = stocklistData[0].price;
-
-        sum += stocklistData[i].price;
-
-        if(this.max<stocklistData[i].price)
-        this.max=stocklistData[i].price;
-
-          if(this.min>stocklistData[i].price)
-          this.min=stocklistData[i].price;
-
+  getCalMinMaxAvg(stocklistData: any) {
+    if (stocklistData.length > 0) {
+      this.max = stocklistData[0].price;
+      this.min = stocklistData[0].price;
+      var sum = stocklistData[0].price;
+      for (var i = 1; i < stocklistData.length; i++) {
+        if (stocklistData[i].price > this.max) {
+          this.max = stocklistData[i].price;
+        }
+        if (stocklistData[i].price < this.min) {
+          this.min = stocklistData[i].price;
+        }
+        sum = sum + stocklistData[i].price;
       }
-      if(stocklistData?.length >0)
-      this.avg = sum / stocklistData.length;
-
-      console.log("average " + this.avg);
-      console.log("max "+this.max);
-      console.log("min "+ this.min);
+      this.avg = Number(sum / stocklistData.length).toFixed(2)
+    } else {
+      this.min = 0;
+      this.max = 0;
+      this.avg = 0;
+    }
   }
 }
