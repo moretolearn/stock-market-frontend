@@ -19,6 +19,8 @@ export class AddStockComponent implements OnInit {
     private dialogRef : MatDialogRef<AddStockComponent>) { }
 
   companyCode:any;
+  startDate:any;
+  endDate:any;
 
   ngOnInit(): void {
     this.companyCode = Number(localStorage.getItem('companyCode'));
@@ -48,9 +50,10 @@ export class AddStockComponent implements OnInit {
         this.smService.addStock(this.companyCode,this.stockForm.value)
         .subscribe({
           next:(res)=>{
-            alert("Stock Registered");
+            // alert("Stock Registered");
             this.stockForm.reset();
             this.dialogRef.close('save');
+            this.smService.openDialog(res.message!,'green')
           },
           error:()=>{
             alert("Error occured while adding the Stock")
@@ -68,9 +71,10 @@ export class AddStockComponent implements OnInit {
     this.smService.updateStock(this.stockForm.value,this.companyCode, this.updateStockData.stockCode)
     .subscribe({
       next:(res)=>{
-        alert("Stock updated");
+        // alert("Stock updated");
         this.stockForm.reset();
         this.dialogRef.close('update');
+        this.smService.openDialog(res.message!,'blue')
       },
       error:()=>{
         alert("Error occured while updating the Stock")

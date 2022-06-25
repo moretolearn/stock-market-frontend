@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { min } from 'moment';
 import { StockmarketService } from 'src/app/services/stockmarket.service';
 
 @Component({
@@ -50,9 +49,10 @@ export class AddCompanyComponent implements OnInit {
         this.smService.add(this.companyForm.value)
           .subscribe({
             next: (res) => {
-              alert("Company Registered");
+              // alert("Company Registered");
               this.companyForm.reset();
               this.dialogRef.close('save');
+              this.smService.openDialog(res.message!,'green')
             },
             error: () => {
               alert("Error occured while adding the Company")
@@ -70,9 +70,10 @@ export class AddCompanyComponent implements OnInit {
     this.smService.updateCompany(this.companyForm.value, this.editCompanyData.companyCode)
       .subscribe({
         next: (res) => {
-          alert("Company updated");
+          // alert("Company updated");
           this.companyForm.reset();
           this.dialogRef.close('update');
+          this.smService.openDialog(res.message,'blue')
         },
         error: () => {
           alert("Error occured while updating the Company")
@@ -80,4 +81,6 @@ export class AddCompanyComponent implements OnInit {
 
       })
   }
+
+
 }

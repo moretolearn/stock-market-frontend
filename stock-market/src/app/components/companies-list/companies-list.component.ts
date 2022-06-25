@@ -49,6 +49,7 @@ export class CompaniesListComponent implements OnInit {
       next: (res) => {
         console.log(res)
         this.getCompaniesList()
+        this.smService.openDialog(res.message!,'red')
       },
     })
   }
