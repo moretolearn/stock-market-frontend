@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +19,8 @@ import { StocksListComponent } from './components/stocks-list/stocks-list.compon
 import { AddStockComponent } from './components/add-stock/add-stock.component';
 import { DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter } from '@angular/material/core';
 import * as moment from 'moment';
+import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
+import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -64,6 +66,22 @@ export class MyDateAdapter extends NativeDateAdapter {
 
 }
 
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: '#cb3837',
+  // bgsOpacity: 5,
+  // bgsPosition: POSITION.bottomRight,
+  // bgsSize: 40,
+  bgsType: SPINNER.rectangleBounce,
+  fgsColor: '#cb3837',
+  // fgsPosition: POSITION.centerCenter,
+  fgsType:SPINNER.rectangleBounce,
+  hasProgressBar:false,
+  text:' ',
+  textColor:'#000000',
+  blur:0,
+  overlayColor:'rgba(40,40,40,0)'
+  };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,6 +93,7 @@ export class MyDateAdapter extends NativeDateAdapter {
     DialogComponent,
     StocksListComponent,
     AddStockComponent,
+    AlertDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +102,10 @@ export class MyDateAdapter extends NativeDateAdapter {
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    // NgxUiLoaderRouterModule,
+    // NgxUiLoaderHttpModule.forRoot({showForeground:true})
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
@@ -91,6 +113,8 @@ export class MyDateAdapter extends NativeDateAdapter {
     { provide: DateAdapter, useClass: MyDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents: [AlertDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
