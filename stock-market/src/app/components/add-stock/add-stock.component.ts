@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
 import { StockmarketService } from 'src/app/services/stockmarket.service';
 
 @Component({
@@ -10,76 +11,78 @@ import { StockmarketService } from 'src/app/services/stockmarket.service';
 })
 export class AddStockComponent implements OnInit {
 
-  buttonName : string ="Save";
+  buttonName: string = "Save";
   stockForm !: FormGroup;
   constructor(
-    private formBuilder : FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public updateStockData:any,
-    private smService : StockmarketService,
-    private dialogRef : MatDialogRef<AddStockComponent>) { }
+    private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public updateStockData: any,
+    private smService: StockmarketService,
+    private dialogRef: MatDialogRef<AddStockComponent>) { }
 
-  companyCode:any;
-  startDate:any;
-  endDate:any;
+  companyCode: any;
+  startDate: any;
+  endDate: any;
 
   ngOnInit(): void {
     this.companyCode = Number(localStorage.getItem('companyCode'));
-    this.stockForm=this.formBuilder.group({
-      stockName : ['',Validators.required],
-      description : ['',Validators.required],
-      price : ['',[Validators.required, Validators.pattern("^[0-9]*$")]],
-      startDate : ['',Validators.required],
-      endDate : ['', Validators.required]
+    this.stockForm = this.formBuilder.group({
+      stockName: ['', Validators.required],
+      description: ['', Validators.required],
+      price: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required]
 
     })
 
-    if(this.updateStockData){
-      this.buttonName="Update";
+    if (this.updateStockData) {
+      this.buttonName = "Update";
       this.stockForm.controls['stockName'].setValue(this.updateStockData.stockName);
       this.stockForm.controls['description'].setValue(this.updateStockData.description);
       this.stockForm.controls['price'].setValue(this.updateStockData.price);
-      this.stockForm.controls['startDate'].setValue(this.updateStockData.startDate);
-      this.stockForm.controls['endDate'].setValue(this.updateStockData.endDate);
-
+      this.stockForm.controls['startDate'].setValue(moment(this.updateStockData.startDate, 'DD-MM-YYYY').toDate());
+      this.stockForm.controls['endDate'].setValue(moment(this.updateStockData.endDate, 'DD-MM-YYYY').toDate());
     }
   }
 
-  addStock(){
-    if(!this.updateStockData){
-      if(this.stockForm.valid){
-        this.smService.addStock(this.companyCode,this.stockForm.value)
-        .subscribe({
-          next:(res)=>{
-            // alert("Stock Registered");
-            this.stockForm.reset();
-            this.dialogRef.close('save');
-            this.smService.openDialog(res.message!,'green')
-          },
-          error:()=>{
-            alert("Error occured while adding the Stock")
-          }
-
-        })
+  addStock() {
+    if (!this.updateStockData) {
+      if (this.stockForm.valid) {
+        this.stockForm.value.startDate = moment(this.stockForm.value.startDate).format('DD-MM-YYYY')
+        this.stockForm.value.endDate = moment(this.stockForm.value.endDate).format('DD-MM-YYYY')
+        this.smService.addStock(this.companyCode, this.stockForm.value)
+          .subscribe({
+            next: (res) => {
+              // alert("Stock Registered");
+              this.stockForm.reset();
+              this.dialogRef.close('save');
+              this.smService.openDialog(res.message!, 'green')
+            },
+            error: () => {
+              alert("Error occured while adding the Stock")
+            }
+          })
       }
     }
-      else{
-        this.updateStock();
-      }
+    else {
+      this.updateStock();
     }
+  }
 
-  updateStock(){
-    this.smService.updateStock(this.stockForm.value,this.companyCode, this.updateStockData.stockCode)
-    .subscribe({
-      next:(res)=>{
-        // alert("Stock updated");
-        this.stockForm.reset();
-        this.dialogRef.close('update');
-        this.smService.openDialog(res.message!,'blue')
-      },
-      error:()=>{
-        alert("Error occured while updating the Stock")
-      }
+  updateStock() {
+    this.stockForm.value.startDate = moment(this.stockForm.value.startDate).format('DD-MM-YYYY')
+    this.stockForm.value.endDate = moment(this.stockForm.value.endDate).format('DD-MM-YYYY')
+    this.smService.updateStock(this.stockForm.value, this.companyCode, this.updateStockData.stockCode)
+      .subscribe({
+        next: (res) => {
+          // alert("Stock updated");
+          this.stockForm.reset();
+          this.dialogRef.close('update');
+          this.smService.openDialog(res.message!, 'blue')
+        },
+        error: () => {
+          alert("Error occured while updating the Stock")
+        }
 
-    })
+      })
   }
 }

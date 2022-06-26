@@ -55,7 +55,7 @@ export class MyDateAdapter extends NativeDateAdapter {
     // let month = date.getMonth() + 1;
     // let year = date.getFullYear();
     // console.log(date)
-    const date = moment(value, 'DD/MM/YYYY');
+    const date = moment(value, 'DD-MM-YYYY');
 
     return date.isValid() ? date.toDate() : null;
   }

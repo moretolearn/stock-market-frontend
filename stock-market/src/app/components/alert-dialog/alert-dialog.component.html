@@ -1,17 +1,31 @@
-
-  <h1 mat-dialog-title style="color: lightblue;">Confirmation</h1>
+<!-- <h1 mat-dialog-title style="color: lightblue">Confirmation</h1>
 <div mat-dialog-content>
-  <p [ngStyle]="{'color': data.color}">{{data.msg}}</p>
-  <!-- <mat-form-field>
-    <input matInput [(ngModel)]="data.color">
-  </mat-form-field> -->
+  <p [ngStyle]="{ color: data.color }">{{ data.msg }}</p>
 </div>
 <div mat-dialog-actions>
-  <!-- <button mat-button (click)="onNoClick()">No Thanks</button> -->
   <div class="container">
-    <button mat-raised-button mat-dialog-close cdkFocusInitial color="primary" >Ok</button>
+    <button mat-raised-button mat-dialog-close cdkFocusInitial color="primary">
+      Ok
+    </button>
   </div>
-
+</div> -->
+<h1 mat-dialog-title style="color: rgb(23, 161, 207)">Confirmation</h1>
+<div class="message  message--error" *ngIf="data.color == 'red'">
+  <p>{{ data.msg }}</p>
 </div>
 
+<div class="message  message--update" *ngIf="data.color == 'blue'">
+  <p>{{ data.msg }}</p>
+</div>
 
+<div class="message  message--success" *ngIf="data.color == 'green'">
+  <p>{{ data.msg }}</p>
+</div>
+
+<div mat-dialog-actions>
+  <div class="container">
+    <button mat-raised-button mat-dialog-close cdkFocusInitial color="primary">
+      Ok
+    </button>
+  </div>
+</div>
