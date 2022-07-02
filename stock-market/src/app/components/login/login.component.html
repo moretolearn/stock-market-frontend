@@ -1,4 +1,4 @@
-
+<form [formGroup]="loginForm">
 <mat-card id="card" style="text-align: center;">
 	<mat-card-title>
 		Login
@@ -6,14 +6,18 @@
 
 	<mat-card-content>
 
-		<mat-form-field>
-			<input matInput placeholder="email">
+		<mat-form-field appearance="outline">
+			<input matInput formControlName="userName" placeholder="username">
 		</mat-form-field><br/>
 
-		<mat-form-field>
-			<input matInput placeholder="password">
+		<mat-form-field appearance="outline">
+			<input matInput formControlName="password" placeholder="password">
 		</mat-form-field><br/>
-		<button mat-raised-button color="primary" style="margin-right:5px;">Signin</button>
-		<button mat-raised-button color="primary" style="margin-right:5px;">Signup</button>
-
+    <div mat-dialog-action [align]="'center'">
+      <button mat-raised-button color="primary" style="margin-right:5px;" (click)="login()">Signin</button>
+      <button mat-raised-button color="primary" style="margin-right:5px;">Signup</button>
+    </div>
 	</mat-card-content>
+</mat-card>
+</form>
+
