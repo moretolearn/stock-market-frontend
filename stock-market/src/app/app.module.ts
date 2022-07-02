@@ -1,4 +1,4 @@
-import { NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,7 +11,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { AddCompanyComponent } from './components/add-company/add-company.component';
 import { CompaniesListComponent } from './components/companies-list/companies-list.component';
 import { CompanyDetailsComponent } from './components/company-details/company-details.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -21,6 +21,7 @@ import { DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter } from '@angular/mater
 import * as moment from 'moment';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -74,13 +75,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsType: SPINNER.rectangleBounce,
   fgsColor: '#cb3837',
   // fgsPosition: POSITION.centerCenter,
-  fgsType:SPINNER.rectangleBounce,
-  hasProgressBar:false,
-  text:' ',
-  textColor:'#000000',
-  blur:0,
-  overlayColor:'rgba(40,40,40,0)'
-  };
+  fgsType: SPINNER.rectangleBounce,
+  hasProgressBar: false,
+  text: ' ',
+  textColor: '#000000',
+  blur: 0,
+  overlayColor: 'rgba(40,40,40,0)'
+};
 
 @NgModule({
   declarations: [
@@ -112,6 +113,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
     { provide: DateAdapter, useClass: MyDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [AlertDialogComponent],
