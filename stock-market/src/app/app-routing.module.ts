@@ -6,7 +6,8 @@ import { CompanyDetailsComponent } from './components/company-details/company-de
 import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'companies', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   { path: 'companies', component: CompaniesListComponent },
   { path: 'companies-detalis', component: CompanyDetailsComponent },
   { path: 'add', component: AddCompanyComponent }
