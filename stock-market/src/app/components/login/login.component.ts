@@ -30,13 +30,14 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid){
       this.smService.getTokenFromBackEnd(this.loginForm.value).subscribe({
         next: (res) => {
-          if(res.jwtToken){
-          localStorage.setItem('token',res.jwtToken)
+          console.log(res)
+          if(res.access_token){
+          localStorage.setItem('token',res.access_token)
           this.router.navigate(['/companies'])
           this.smService.updatemenu.next()
 
           // console.log(res)
-          // this.smService.getRoles()
+          this.smService.getRoles()
           }
         },
       })

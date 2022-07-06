@@ -4,13 +4,13 @@ import { AddCompanyComponent } from './components/add-company/add-company.compon
 import { CompaniesListComponent } from './components/companies-list/companies-list.component';
 import { CompanyDetailsComponent } from './components/company-details/company-details.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'companies', component: CompaniesListComponent },
-  { path: 'companies-detalis', component: CompanyDetailsComponent },
-  { path: 'add', component: AddCompanyComponent }
+  { path: 'companies', component: CompaniesListComponent, canActivate:[AuthGuard] },
+  { path: 'companies-detalis', component: CompanyDetailsComponent, canActivate:[AuthGuard] },
 
 ];
 

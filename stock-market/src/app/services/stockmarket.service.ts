@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, Subject, throwError } from 'rxjs';
 import { Company } from '../models/company.model';
 import { Stock } from '../models/stock.model';
@@ -7,12 +7,17 @@ import { ApiResponse } from '../models/api-response.model';
 import { NgxUiLoaderConfig, NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from '../components/alert-dialog/alert-dialog.component';
-const query = 'http://localhost:8083/api/v1/query/';
+import { JwtHelperService } from '@auth0/angular-jwt';
+const apigateway = 'http://localhost:8083/api/v1/'
+const query = apigateway + 'query/';
 const companyQuery = query + 'company';
 const stockQuery = query + 'stock';
-const command = 'http://localhost:8083/api/v1/command/';
+const command = apigateway + 'command/';
 const companyCommand = command + 'company';
 const stockCommand = command + 'stock'
+const TOKEN_AUTH_USERNAME = 'testjwtclientid'
+const TOKEN_AUTH_PASSWORD = 'XY7kmzoNzl100'
+const AUTH_TOKEN = 'auth/oauth/token'
 @Injectable({
   providedIn: 'root'
 })
@@ -27,7 +32,8 @@ export class StockmarketService {
   constructor(
     private http: HttpClient,
     private ngxUi: NgxUiLoaderService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private jwtSM:JwtHelperService
   ) { this.config = this.ngxUi.getDefaultConfig() }
 
   getAll(): Observable<ApiResponse<Company[]>> {
@@ -47,9 +53,9 @@ export class StockmarketService {
       this.ngxUi.stop();
       return res;
     }),
-    catchError(data => {
-      return this.handleServerError(data)
-    })
+      catchError(data => {
+        return this.handleServerError(data)
+      })
     );
   }
 
@@ -59,9 +65,9 @@ export class StockmarketService {
       this.ngxUi.stop();
       return res;
     }),
-    catchError(data => {
-      return this.handleServerError(data)
-    })
+      catchError(data => {
+        return this.handleServerError(data)
+      })
     );
   }
 
@@ -71,9 +77,9 @@ export class StockmarketService {
       this.ngxUi.stop();
       return res;
     }),
-    catchError(data => {
-      return this.handleServerError(data)
-    })
+      catchError(data => {
+        return this.handleServerError(data)
+      })
     );
   }
 
@@ -83,9 +89,9 @@ export class StockmarketService {
       this.ngxUi.stop();
       return res;
     }),
-    catchError(data => {
-      return this.handleServerError(data)
-    })
+      catchError(data => {
+        return this.handleServerError(data)
+      })
     );
   }
 
@@ -95,9 +101,9 @@ export class StockmarketService {
       this.ngxUi.stop();
       return res;
     }),
-    catchError(data => {
-      return this.handleServerError(data)
-    })
+      catchError(data => {
+        return this.handleServerError(data)
+      })
     );
   }
 
@@ -107,9 +113,9 @@ export class StockmarketService {
       this.ngxUi.stop();
       return res;
     }),
-    catchError(data => {
-      return this.handleServerError(data)
-    })
+      catchError(data => {
+        return this.handleServerError(data)
+      })
     );
   }
 
@@ -119,9 +125,9 @@ export class StockmarketService {
       this.ngxUi.stop();
       return res;
     }),
-    catchError(data => {
-      return this.handleServerError(data)
-    })
+      catchError(data => {
+        return this.handleServerError(data)
+      })
     );
   }
 
@@ -131,9 +137,9 @@ export class StockmarketService {
       this.ngxUi.stop();
       return res;
     }),
-    catchError(data => {
-      return this.handleServerError(data)
-    })
+      catchError(data => {
+        return this.handleServerError(data)
+      })
     );
   }
 
@@ -143,9 +149,9 @@ export class StockmarketService {
       this.ngxUi.stop();
       return res;
     }),
-    catchError(data => {
-      return this.handleServerError(data)
-    })
+      catchError(data => {
+        return this.handleServerError(data)
+      })
     );
   }
 
@@ -163,10 +169,31 @@ export class StockmarketService {
       );
   }
 
-  getTokenFromBackEnd(loginForm: any): Observable<any> {
+  getTokenFromBackEnd1(loginForm: any): Observable<any> {
     let url = 'http://localhost:9191/end-user/token'
     this.ngxUi.start();
     return this.http.post(url, loginForm)
+      .pipe(
+        map((res: any) => {
+          this.ngxUi.stop();
+          return res;
+        }),
+        catchError(data => {
+          return this.handleServerError(data)
+        })
+      );
+  }
+
+  getTokenFromBackEnd(loginForm: any): Observable<any> {
+
+    const body = `username=${encodeURIComponent(loginForm.userName)}&password=${encodeURIComponent(loginForm.password)}&grant_type=password`;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+      'Authorization': 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD)
+    })
+
+    return this.http.post(apigateway + AUTH_TOKEN, body, { headers: headers })
       .pipe(
         map((res: any) => {
           this.ngxUi.stop();
@@ -188,8 +215,14 @@ export class StockmarketService {
   }
 
   handleServerError(error: any) {
+    console.log(error)
     this.ngxUi.stop();
-    this.openDialog(error.message,'red');
+    if(error.error){
+      this.openDialog(error.error?.result.errMsg, 'red');
+    }else{
+      this.openDialog(error.message, 'red');
+    }
+
     return throwError(() => {
       return error.message;
     });
@@ -199,14 +232,20 @@ export class StockmarketService {
     return localStorage.getItem('token') || '';
   }
 
-  getRoles() {
+  getRoles():any {
     let tokenPart = this.getToken().split('.')[1];
     // let rolesParse = Buffer.from(tokenPart, 'base64').toString('binary');
     let rolesParse = atob(tokenPart);
     console.log(rolesParse)
-    // console.log(btoa(rolesParse))
     let roles = JSON.parse(rolesParse);
     console.log(roles)
+    let t=this.jwtSM.decodeToken(this.getToken())
+    console.log(t)
+    let date=this.jwtSM.getTokenExpirationDate(this.getToken());
+    console.log(date)
+    let isToken  = this.jwtSM.isTokenExpired(this.getToken())
+    console.log(isToken)
+    return roles;
   }
 }
 

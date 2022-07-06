@@ -55,7 +55,7 @@ export class AddCompanyComponent implements OnInit {
               this.smService.openDialog(res.message!,'green')
             },
             error: () => {
-              alert("Error occured while adding the Company")
+              // alert("Error occured while adding the Company")
             }
 
           })
@@ -76,7 +76,7 @@ export class AddCompanyComponent implements OnInit {
           this.smService.openDialog(res.message,'blue')
         },
         error: () => {
-          alert("Error occured while updating the Company")
+          // alert("Error occured while updating the Company")
         }
 
       })

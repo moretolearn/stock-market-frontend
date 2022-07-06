@@ -22,6 +22,12 @@ import * as moment from 'moment';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { JwtHelperService, JwtModule, JwtModuleOptions, JWT_OPTIONS } from '@auth0/angular-jwt';
+// import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -83,6 +89,34 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   overlayColor: 'rgba(40,40,40,0)'
 };
 
+const authConfig : JwtModuleOptions={
+
+  config: {
+    tokenGetter: (() => localStorage.getItem('token')),
+    // authScheme:'Bearer ',
+    // throwNoTokenError: false,
+    // skipWhenExpired: true,
+    // tokenGetter: tokenGetter
+    // allowedDomains: ["example.com"],
+    // disallowedRoutes: ["http://example.com/examplebadroute/"],
+  }
+}
+
+// export function jwtOptionsFactory() {
+//   return {
+//     tokenGetter: () => {
+//       return localStorage.getItem('access_token');
+//     },
+//     // allowedDomains: ["example.com"],
+//     headerPrefix: 'Bearer',
+//     tokenName: 'access_token',
+//     globalHeaders: [{'Content-Type': 'application/json'}],
+//     noJwtError: false,
+//     noTokenScheme: true,
+//   }
+// }
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,13 +141,16 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     // NgxUiLoaderRouterModule,
     // NgxUiLoaderHttpModule.forRoot({showForeground:true})
+    JwtModule.forRoot(authConfig)
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
     { provide: DateAdapter, useClass: MyDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [AlertDialogComponent],
