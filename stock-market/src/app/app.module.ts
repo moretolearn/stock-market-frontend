@@ -23,6 +23,7 @@ import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoade
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { JwtHelperService, JwtModule, JwtModuleOptions, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 // import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
 
 export function tokenGetter() {
@@ -89,7 +90,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   overlayColor: 'rgba(40,40,40,0)'
 };
 
-const authConfig : JwtModuleOptions={
+const authConfig: JwtModuleOptions = {
 
   config: {
     tokenGetter: (() => localStorage.getItem('token')),
@@ -150,6 +151,7 @@ const authConfig : JwtModuleOptions={
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' }},
     JwtHelperService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

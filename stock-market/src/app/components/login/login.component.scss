@@ -4,3 +4,7 @@ mat-form-field{
 .buttonclass{
   margin-left: 8px;
 }
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

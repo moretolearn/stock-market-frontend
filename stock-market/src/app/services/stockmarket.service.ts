@@ -33,7 +33,7 @@ export class StockmarketService {
     private http: HttpClient,
     private ngxUi: NgxUiLoaderService,
     private dialog: MatDialog,
-    private jwtSM:JwtHelperService
+    private jwtSM: JwtHelperService
   ) { this.config = this.ngxUi.getDefaultConfig() }
 
   getAll(): Observable<ApiResponse<Company[]>> {
@@ -169,6 +169,22 @@ export class StockmarketService {
       );
   }
 
+  registration(registerForm: any): Observable<any> {
+    let url = 'http://localhost:8083/api/v1/auth/springjwt/signup'
+    this.ngxUi.start();
+    return this.http.post(url, registerForm)
+      .pipe(
+        map((res: any) => {
+          this.ngxUi.stop();
+          return res;
+        }),
+        catchError(data => {
+          return this.handleServerError(data)
+        })
+      );
+  }
+
+
   getTokenFromBackEnd1(loginForm: any): Observable<any> {
     let url = 'http://localhost:9191/end-user/token'
     this.ngxUi.start();
@@ -217,9 +233,17 @@ export class StockmarketService {
   handleServerError(error: any) {
     console.log(error)
     this.ngxUi.stop();
-    if(error.error){
-      this.openDialog(error.error?.result.errMsg, 'red');
-    }else{
+    if (error.status == 0) {
+      this.openDialog('Back end server down or internal server error', 'red');
+    } else if (error.status == 400) {
+      if(error.error.result){
+        this.openDialog(error.error?.result?.errMsg, 'red');
+      }else if(error.error.error_description){
+        this.openDialog(error.error.error_description, 'red');
+      }else{
+        this.openDialog(error.message, 'red');
+      }
+    } else {
       this.openDialog(error.message, 'red');
     }
 
@@ -232,18 +256,18 @@ export class StockmarketService {
     return localStorage.getItem('token') || '';
   }
 
-  getRoles():any {
+  getRoles(): any {
     let tokenPart = this.getToken().split('.')[1];
     // let rolesParse = Buffer.from(tokenPart, 'base64').toString('binary');
     let rolesParse = atob(tokenPart);
     console.log(rolesParse)
     let roles = JSON.parse(rolesParse);
     console.log(roles)
-    let t=this.jwtSM.decodeToken(this.getToken())
+    let t = this.jwtSM.decodeToken(this.getToken())
     console.log(t)
-    let date=this.jwtSM.getTokenExpirationDate(this.getToken());
+    let date = this.jwtSM.getTokenExpirationDate(this.getToken());
     console.log(date)
-    let isToken  = this.jwtSM.isTokenExpired(this.getToken())
+    let isToken = this.jwtSM.isTokenExpired(this.getToken())
     console.log(isToken)
     return roles;
   }

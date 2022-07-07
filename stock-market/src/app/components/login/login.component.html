@@ -1,3 +1,4 @@
+<div *ngIf="!isForm">
 <form [formGroup]="loginForm">
 <mat-card id="card" style="text-align: center;">
 	<mat-card-title>
@@ -15,9 +16,38 @@
 		</mat-form-field><br/>
     <div mat-dialog-action [align]="'center'">
       <button mat-raised-button color="primary" style="margin-right:5px;" (click)="login()">Signin</button>
-      <button mat-raised-button color="primary" style="margin-right:5px;">Signup</button>
+      <button mat-raised-button color="primary" style="margin-right:5px;" (click)="goToSingup()">Signup</button>
     </div>
 	</mat-card-content>
 </mat-card>
 </form>
+</div>
+<div *ngIf="isForm">
+  <form [formGroup]="registerForm">
+  <mat-card id="card" style="text-align: center;">
+    <mat-card-title>
+      Registration
+    </mat-card-title>
 
+    <mat-card-content>
+
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="name" placeholder="username">
+      </mat-form-field><br/>
+
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="password" placeholder="password">
+      </mat-form-field><br/>
+      <mat-radio-group formControlName="roles">
+        <mat-radio-button mat-stroked-button value="ROLE_ADMIN" >ADMIN</mat-radio-button>
+        <mat-radio-button mat-stroked-button value="ROLE_USER" >USER</mat-radio-button>
+      </mat-radio-group>
+
+      <div mat-dialog-action [align]="'center'">
+        <button mat-raised-button color="primary" style="margin-right:5px;" (click)="register()">Register</button>
+        <button mat-raised-button color="primary" style="margin-right:5px;" (click)="bactToSignin()">Signin</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  </form>
+  </div>
