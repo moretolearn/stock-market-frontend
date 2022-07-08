@@ -71,10 +71,11 @@ export class StocksListComponent implements OnInit {
 
   public onStockDelete(row: any) {
 
-    this.smService.deleteStock(row.stockCode).subscribe({
+    this.smService.deleteStock(row.stockCode, this.companyCode).subscribe({
       next: (res) => {
         console.log(res)
         this.getStocksListByCompany();
+        this.smService.openDialog(res.message!, 'red')
       },
     })
   }

@@ -119,9 +119,9 @@ export class StockmarketService {
     );
   }
 
-  deleteStock(id: number): Observable<ApiResponse<any>> {
+  deleteStock(id: number,companyCode:number): Observable<ApiResponse<any>> {
     this.ngxUi.start();
-    return this.http.delete(`${stockCommand}/${id}`).pipe(map((res: any) => {
+    return this.http.delete(`${stockCommand}/${id}/${companyCode}`).pipe(map((res: any) => {
       this.ngxUi.stop();
       return res;
     }),
@@ -236,17 +236,16 @@ export class StockmarketService {
     if (error.status == 0) {
       this.openDialog('Back end server down or internal server error', 'red');
     } else if (error.status == 400) {
-      if(error.error.result){
+      if (error.error.result) {
         this.openDialog(error.error?.result?.errMsg, 'red');
-      }else if(error.error.error_description){
+      } else if (error.error.error_description) {
         this.openDialog(error.error.error_description, 'red');
-      }else{
+      } else {
         this.openDialog(error.message, 'red');
       }
     } else {
       this.openDialog(error.message, 'red');
     }
-
     return throwError(() => {
       return error.message;
     });
