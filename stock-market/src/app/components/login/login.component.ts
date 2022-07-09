@@ -11,7 +11,7 @@ import { StockmarketService } from 'src/app/services/stockmarket.service';
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
-  registerForm!:FormGroup;
+  registerForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
       password: ['', Validators.required],
-      roles:['', Validators.required]
+      roles: ['', Validators.required]
     })
   }
 
@@ -50,13 +50,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  register(){
-    this.registerForm.value.roles=[{name:this.registerForm.value.roles}]
+  register() {
+    this.registerForm.value.roles = [{ name: this.registerForm.value.roles }]
     console.log(this.registerForm.value)
     if (this.registerForm.valid) {
       this.smService.registration(this.registerForm.value).subscribe({
         next: (res) => {
-          this.smService.openDialog(res.message,'green')
+          this.smService.openDialog(res.message, 'green')
           console.log(res)
         },
       })
@@ -72,4 +72,9 @@ export class LoginComponent implements OnInit {
   goToSingup() {
     this.isForm = true;
   }
+
+  roles = [
+    { value: 'ROLE_ADMIN', viewValue: 'ADMIN' },
+    { value: 'ROLE_USER', viewValue: 'USER' }
+  ]
 }

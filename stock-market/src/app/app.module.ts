@@ -24,6 +24,7 @@ import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.com
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { JwtHelperService, JwtModule, JwtModuleOptions, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { FlexLayoutModule } from '@angular/flex-layout';
 // import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
 
 export function tokenGetter() {
@@ -142,7 +143,8 @@ const authConfig: JwtModuleOptions = {
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     // NgxUiLoaderRouterModule,
     // NgxUiLoaderHttpModule.forRoot({showForeground:true})
-    JwtModule.forRoot(authConfig)
+    JwtModule.forRoot(authConfig),
+    FlexLayoutModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },

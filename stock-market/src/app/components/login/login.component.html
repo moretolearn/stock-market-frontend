@@ -1,4 +1,4 @@
-<div *ngIf="!isForm">
+<!-- <div *ngIf="!isForm">
 <form [formGroup]="loginForm">
 <mat-card id="card" style="text-align: center;">
 	<mat-card-title>
@@ -50,4 +50,64 @@
     </mat-card-content>
   </mat-card>
   </form>
+  </div> -->
+
+
+  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center" *ngIf="!isForm">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Log in</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" [formGroup]="loginForm">
+        <mat-card-content>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <input matInput placeholder="Username" formControlName="userName">
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <input matInput placeholder="Password" formControlName="password">
+          </mat-form-field>
+        </mat-card-content>
+        <!-- <button mat-stroked-button color="accent" class="btn-block">Log in</button> -->
+        <div mat-dialog-action [align]="'center'">
+          <button mat-raised-button color="primary" style="margin-right:5px;" (click)="login()">Signin</button>
+          <button mat-raised-button color="primary" style="margin-right:5px;" (click)="goToSingup()">Signup</button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+
+  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center" *ngIf="isForm">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Register</mat-card-title>
+      </mat-card-header>
+
+      <form class="example-form" [formGroup]="registerForm">
+
+        <mat-card-content>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <input matInput placeholder="Username" formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <input matInput placeholder="Password" formControlName="password">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Choose Role</mat-label>
+            <mat-select>
+              <mat-option [value]="role.value" *ngFor="let role of roles">{{role.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </mat-card-content>
+
+        <!-- <button mat-stroked-button color="accent" class="btn-block">Register</button> -->
+        <div mat-dialog-action [align]="'center'">
+          <button mat-raised-button color="primary" style="margin-right:5px;" (click)="register()">Register</button>
+          <button mat-raised-button color="primary" style="margin-right:5px;" (click)="bactToSignin()">Signin</button>
+        </div>
+      </form>
+    </mat-card>
   </div>
