@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('token', res.access_token)
             this.router.navigate(['/companies'])
             this.smService.updatemenu.next()
-
-            // console.log(res)
+            this.loginForm.reset()
             this.smService.getRoles()
           }
         },
@@ -56,7 +55,9 @@ export class LoginComponent implements OnInit {
     if (this.registerForm.valid) {
       this.smService.registration(this.registerForm.value).subscribe({
         next: (res) => {
+          this.registerForm.reset();
           this.smService.openDialog(res.message, 'green')
+          this.isForm = false;
           console.log(res)
         },
       })
