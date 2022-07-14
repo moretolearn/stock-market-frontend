@@ -8,13 +8,13 @@ import { AuthGuard } from './guard/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'companies', component: CompaniesListComponent, canActivate:[AuthGuard] },
-  { path: 'companies-detalis', component: CompanyDetailsComponent, canActivate:[AuthGuard] },
+  { path: 'companies', component: CompaniesListComponent, canActivate: [AuthGuard] },
+  { path: 'companies-detalis', component: CompanyDetailsComponent, canActivate: [AuthGuard] },
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

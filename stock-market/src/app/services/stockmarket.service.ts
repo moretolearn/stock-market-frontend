@@ -8,7 +8,7 @@ import { NgxUiLoaderConfig, NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from '../components/alert-dialog/alert-dialog.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
-const apigateway = 'http://localhost:8083/api/v1/'
+const apigateway = 'http://13.234.17.31:8083/api/v1/'
 const query = apigateway + 'query/';
 const companyQuery = query + 'company';
 const stockQuery = query + 'stock';
