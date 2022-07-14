@@ -12,16 +12,22 @@ export class HeaderComponent implements OnInit {
   constructor(private smService:StockmarketService,private router:Router) { }
 
   isLogin: boolean = false;
+  isCompanyList = true;
 
   ngOnInit(): void {
     this.smService.updatemenu.subscribe(next=>{
       console.log(next)
+      this.isCompanyList = next;
     })
   }
 
   logOut(){
     localStorage.clear();
     this.router.navigate(['/login'])
+  }
+
+  gotoCompany(){
+    this.router.navigate(['/companies'])
   }
 
 }

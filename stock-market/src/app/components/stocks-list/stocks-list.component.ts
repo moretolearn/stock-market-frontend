@@ -44,6 +44,8 @@ export class StocksListComponent implements OnInit {
   companyCode: number;
 
   ngOnInit(): void {
+    this.smService.updatemenu.next(false)
+
     this.companyCode = Number(localStorage.getItem('companyCode'));
     // this.getStocksList()
     this.getStocksListByCompany()

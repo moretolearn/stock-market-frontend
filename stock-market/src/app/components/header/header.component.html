@@ -12,24 +12,31 @@
   </nav>
 </div> -->
 
-
 <p>
   <mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+    >
       <mat-icon>business</mat-icon>
     </button>
     <span>Stock Market</span>
     <span class="example-spacer"></span>
-    <!-- <button mat-raised-button color="warn" (click)="openDialog()">Add Company</button> -->
+    <div *ngIf="!isCompanyList">
+      <button mat-stroked-button color="warn" (click)="gotoCompany()">
+        Company List
+      </button>
+    </div>
     <div>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="logOut()">
+      <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+        (click)="logOut()"
+      >
         <mat-icon>logout</mat-icon>
       </button>
     </div>
-
   </mat-toolbar>
 </p>
-
-
-
-

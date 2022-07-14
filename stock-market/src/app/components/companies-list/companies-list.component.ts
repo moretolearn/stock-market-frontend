@@ -31,6 +31,7 @@ export class CompaniesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.smService.updatemenu.next(true)
     this.getCompaniesList()
   }
 

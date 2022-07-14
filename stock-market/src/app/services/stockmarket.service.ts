@@ -24,7 +24,7 @@ const AUTH_TOKEN = 'auth/oauth/token'
 export class StockmarketService {
   config: NgxUiLoaderConfig;
 
-  private _updatemenu = new Subject<void>();
+  private _updatemenu = new Subject<boolean>();
   get updatemenu() {
     return this._updatemenu;
   }

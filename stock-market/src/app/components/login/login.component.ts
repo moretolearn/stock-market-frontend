@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
           if (res.access_token) {
             localStorage.setItem('token', res.access_token)
             this.router.navigate(['/companies'])
-            this.smService.updatemenu.next()
             this.loginForm.reset()
             this.smService.getRoles()
           }
